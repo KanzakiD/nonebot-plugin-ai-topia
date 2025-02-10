@@ -1,67 +1,55 @@
-<div align="center">
-  <a href="https://v2.nonebot.dev/store"><img src="https://github.com/A-kirami/nonebot-plugin-ai-topia/blob/resources/nbp_logo.png" width="180" height="180" alt="NoneBotPluginLogo"></a>
-  <br>
-  <p><img src="https://github.com/A-kirami/nonebot-plugin-ai-topia/blob/resources/NoneBotPlugin.svg" width="240" alt="NoneBotPluginText"></p>
-</div>
+<!--
+ * @Author         : kanzakiD
+ * @Date           : 2024-02-10 00:00:00
+ * @LastEditors    : mengshouer
+ * @LastEditTime   : 2021-02-10 00:00:00
+ * @Description    : None
+ * @GitHub         : https://github.com/KanzakiD/nonebot-plugin-ai-topia
+-->
+
+<p align="center">
+  <a href="https://v2.nonebot.dev/"><img src="https://v2.nonebot.dev/logo.png" width="200" height="200" alt="nonebot"></a>
+</p>
 
 <div align="center">
-
-<a href="./LICENSE">
-    <img src="https://img.shields.io/github/license/owner/nonebot-plugin-template.svg" alt="license">
-</a>
-<a href="https://pypi.python.org/pypi/nonebot-plugin-template">
-    <img src="https://img.shields.io/pypi/v/nonebot-plugin-template.svg" alt="pypi">
-</a>
-<img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="python">
-
-</div>
 
 # nonebot-plugin-ai-topia
 
+_✨ NoneBot2 AI乌托邦对话插件 ✨_
 
-## 📖 介绍
+</div>
+
+<p align="center">
+  <a href="https://raw.githubusercontent.com/cscs181/QQ-Github-Bot/master/LICENSE">
+    <img src="https://img.shields.io/github/license/cscs181/QQ-Github-Bot.svg" alt="license">
+  </a>
+  <a href="https://pypi.python.org/pypi/nonebot-plugin-analysis-bilibili">
+    <img src="https://img.shields.io/pypi/v/nonebot-plugin-analysis-bilibili.svg" alt="pypi">
+  </a>
+  <img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="python">
+</p>
+
+## 使用方式
 
 暂无
 
-## 💿 安装
 
-<details open>
-<summary>使用 nb-cli 安装</summary>
-在 nonebot2 项目的根目录下打开命令行, 输入以下指令即可安装
+## 安装
 
-    nb plugin install nonebot-plugin-ai-topia
+1. 使用 nb-cli 安装，不需要手动添加入口，更新使用 pip (推荐)
 
-</details>
+```
+nb plugin install nonebot_plugin_analysis_bilibili
+```
 
-<details>
-<summary>使用包管理器安装</summary>
-在 nonebot2 项目的插件目录下, 打开命令行, 根据你使用的包管理器, 输入相应的安装命令
+2. 使用 pip 安装和更新，初次安装需要手动添加入口 （新版默认不带 bot.py 文件）
 
-<details>
-<summary>pip</summary>
+```
+pip install --upgrade nonebot_plugin_analysis_bilibili
+```
 
-    pip install nonebot-plugin-ai-topia
-</details>
-<details>
-<summary>pdm</summary>
+pip 安装后在 Nonebot2 入口文件（例如 bot.py ）增加：
 
-    pdm add nonebot-plugin-ai-topia
-</details>
-<details>
-<summary>poetry</summary>
-
-    poetry add nonebot-plugin-ai-topia
-</details>
-<details>
-<summary>conda</summary>
-
-    conda install nonebot-plugin-ai-topia
-</details>
-
-打开 nonebot2 项目根目录下的 `pyproject.toml` 文件, 在 `[tool.nonebot]` 部分追加写入
-
-    plugins = ["nonebot_plugin_ai_topia"]
-
-</details>
-
-
+```python
+nonebot.load_plugin("nonebot_plugin_analysis_bilibili")
+```
