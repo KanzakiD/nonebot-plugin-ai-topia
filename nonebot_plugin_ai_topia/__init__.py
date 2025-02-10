@@ -11,8 +11,11 @@ __plugin_meta__ = PluginMetadata(
     homepage="https://github.com/KanzakiD/nonebot-plugin-ai-topia",
 )
 
-bot= on_message(rule=to_me(),priority=20)
+api_key="test"
+api_secret="test"
 
+
+bot= on_message(rule=to_me(),priority=20)
 
 
 @bot.handle()
