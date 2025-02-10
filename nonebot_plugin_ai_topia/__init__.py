@@ -18,4 +18,4 @@ bot= on_message(rule=to_me(),priority=20)
 @bot.handle()
 async def handle_function():
 
-    await bot.finish(str("success"))
+    await bot.finish(str("success!"))
