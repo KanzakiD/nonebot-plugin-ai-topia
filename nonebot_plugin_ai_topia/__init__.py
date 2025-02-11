@@ -1,24 +1,61 @@
-import nonebot
-from nonebot.plugin import on_command,on_keyword,on_message
 from nonebot.plugin import PluginMetadata
-from nonebot.rule import to_me
 
-__plugin_meta__ = PluginMetadata(
-    name="ai_topia",
-    description="接入ai乌托邦pro对话",
-    usage="暂无",
-    type="application",
-    homepage="https://github.com/KanzakiD/nonebot-plugin-ai-topia",
+from nonebot import get_plugin_config
+from .config import Config
+
+from nonebot.rule import to_me
+from nonebot.plugin import on_command,on_keyword,on_message
+from nonebot.adapters import Message
+from nonebot.params import EventMessage
+
+import httpx
+
+
+## plugin meta data
+__plugin_meta__= PluginMetadata(
+    name= "ai_topia",
+    description= "接入ai乌托邦pro对话",
+    usage= "暂无",
+    type= "application",
+    homepage= "https://github.com/KanzakiD/nonebot-plugin-ai-topia",
 )
 
-api_key="test"
-api_secret="test"
+
+## config
+plugin_config= get_plugin_config(Config)
+
+api_key= plugin_config.ai_topia_api_key
+api_secret= plugin_config.ai_topia_api_secret
 
 
-bot= on_message(rule=to_me(),priority=20)
+## 响应
+mes= on_message(rule=to_me(),priority=plugin_config.ai_topia_priority)
 
+#临时token，后期挪到config
+temp_token= "eyJhbGciOiJIUzUxMiJ9.eyJhdXRoX3R5cGUiOiIyIiwidXNlcl9pZCI6Njg1NjgsInVzZXJfa2V5IjoiZGM4Mjc3MGNmN2M1NGI2Y2IwMDI4OTk1NGQzNzY0MmYiLCJ1c2VybmFtZSI6IjE4Njk3NDQzOTAwIn0.btmchfObGh9rDlYP6QsbIiTTg8BUDOykSeLAZjfeyDnvfIBefhJhqK3iBfwduC-AAZWZpq0ulhePz3VDgRFA_g"
 
-@bot.handle()
-async def handle_function():
+headers= {'Content-Type': 'application/json; charset=utf-8','Authorization': f'Bearer {temp_token}'}
 
-    await bot.finish(str("success"))
+sc_url= 'https://pro.ai-topia.com/apis/chat/sendChat'
+
+@mes.handle()
+async def handle_function(args: Message = EventMessage()):
+    if user_content := args.extract_plain_text():
+
+        body= {'appUserId': '1', 'content': user_content, "roleId": "2472878"}
+
+        async with httpx.AsyncClient() as client:
+            res= await client.post(
+                sc_url,
+                headers= headers,
+                json= body
+            )
+            if res.status_code == 200:
+                data= res.json()
+                if data and "data" in data and data["data"] and "content" in data["data"]:
+                    await mes.finish(data["data"]["content"])
+                else:
+                    await mes.send("数据结构不符合预期，请重试喵")
+                    await mes.finish(f"数据为：{data}")
+            else:
+                await mes.finish("请求失败，请重试喵")
