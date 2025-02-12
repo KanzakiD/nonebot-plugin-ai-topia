@@ -70,8 +70,8 @@ async def handle_function(args: Message = EventMessage()):
                     await mes.finish(data["data"]["content"])
                 else:
                     await topia_login(api_key,api_secret)
-                    await mes.send("数据结构不符合预期或token过期，已尝试重置token，请重新对话或检查apikey")
+                    await mes.send("数据结构不符合预期或token过期，已尝试重置token，请重新对话或检查apikey配置")
                     await mes.finish(f"数据为：{data}")
             else:
                 await topia_login(api_key,api_secret)
-                await mes.finish("请求失败，已尝试重置token，请重试喵")
+                await mes.finish("请求失败，已尝试重置token，请重新对话或检查apikey配置")
