@@ -8,7 +8,7 @@ from nonebot.plugin import on_message,PluginMetadata
 from nonebot.adapters import Message
 # 本地存储
 from nonebot import require
-import nonebot_plugin_localstore as store
+import nonebot_plugin_localstore as store # type: ignore
 require("nonebot_plugin_localstore")
 
 
