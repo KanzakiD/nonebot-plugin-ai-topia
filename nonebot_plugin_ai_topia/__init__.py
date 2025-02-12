@@ -1,10 +1,12 @@
 import httpx
+from.Login import topia_login
 
+from pathlib import Path
 from .config import Config
 from nonebot import get_plugin_config
 from nonebot.rule import to_me
 from nonebot.params import EventMessage
-from nonebot.plugin import on_message,PluginMetadata
+from nonebot.plugin import on_message,on_command,PluginMetadata
 from nonebot.adapters import Message
 # 本地存储
 from nonebot import require
@@ -29,22 +31,31 @@ api_key= plugin_config.ai_topia_api_key
 api_secret= plugin_config.ai_topia_api_secret
 role_id= plugin_config.ai_topia_role_id
 
+# token文件句柄
+data_file= store.get_plugin_data_file("localstore.txt")
 
-## 响应
+
+## 对话模块
 mes= on_message(rule=to_me(),priority=plugin_config.ai_topia_priority)
-
-# 临时token，后期挪到config
-temp_token= "eyJhbGciOiJIUzUxMiJ9.eyJhdXRoX3R5cGUiOiIyIiwidXNlcl9pZCI6Njg1NjgsInVzZXJfa2V5IjoiZGM4Mjc3MGNmN2M1NGI2Y2IwMDI4OTk1NGQzNzY0MmYiLCJ1c2VybmFtZSI6IjE4Njk3NDQzOTAwIn0.btmchfObGh9rDlYP6QsbIiTTg8BUDOykSeLAZjfeyDnvfIBefhJhqK3iBfwduC-AAZWZpq0ulhePz3VDgRFA_g"
-headers= {'Content-Type': 'application/json; charset=utf-8','Authorization': f'Bearer {temp_token}'}
-sc_url= 'https://pro.ai-topia.com/apis/chat/sendChat'
 
 @mes.handle()
 async def handle_function(args: Message = EventMessage()):
     # 检测非空消息
     if user_content := args.extract_plain_text():
+
+        # 是否获取过token，杜绝每次加载进行无意义post请求影响性能
+        if data_file.exists():
+            temp_token= data_file.read_text()
+        else:
+            # 执行login方法获取token
+            await topia_login(api_key,api_secret)
+            temp_token= data_file.read_text()
         # body
         body= {'appUserId': '2', 'content': user_content, "roleId": role_id}
-
+        headers= {'Content-Type': 'application/json; charset=utf-8','Authorization': f'Bearer {temp_token}'}
+        sc_url= 'https://pro.ai-topia.com/apis/chat/sendChat'
+        
+        # post请求
         async with httpx.AsyncClient() as client:
             res= await client.post(
                 sc_url,
@@ -58,7 +69,9 @@ async def handle_function(args: Message = EventMessage()):
                 if "content" in data["data"]:
                     await mes.finish(data["data"]["content"])
                 else:
-                    await mes.send("数据结构不符合预期，请重试喵")
+                    await topia_login(api_key,api_secret)
+                    await mes.send("数据结构不符合预期或token过期，已尝试重置token，请重新对话或检查apikey")
                     await mes.finish(f"数据为：{data}")
             else:
-                await mes.finish("请求失败，请重试喵")
+                await topia_login(api_key,api_secret)
+                await mes.finish("请求失败，已尝试重置token，请重试喵")
