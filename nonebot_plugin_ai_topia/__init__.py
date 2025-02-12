@@ -1,14 +1,15 @@
-from nonebot.plugin import PluginMetadata
-
-from nonebot import get_plugin_config
-from .config import Config
-
-from nonebot.rule import to_me
-from nonebot.plugin import on_command,on_keyword,on_message
-from nonebot.adapters import Message
-from nonebot.params import EventMessage
-
 import httpx
+
+from .config import Config
+from nonebot import get_plugin_config
+from nonebot.rule import to_me
+from nonebot.params import EventMessage
+from nonebot.plugin import on_message,PluginMetadata
+from nonebot.adapters import Message
+# 本地存储
+from nonebot import require
+import nonebot_plugin_localstore as store
+require("nonebot_plugin_localstore")
 
 
 ## plugin meta data
@@ -26,23 +27,23 @@ plugin_config= get_plugin_config(Config)
 
 api_key= plugin_config.ai_topia_api_key
 api_secret= plugin_config.ai_topia_api_secret
+role_id= plugin_config.ai_topia_role_id
 
 
 ## 响应
 mes= on_message(rule=to_me(),priority=plugin_config.ai_topia_priority)
 
-#临时token，后期挪到config
+# 临时token，后期挪到config
 temp_token= "eyJhbGciOiJIUzUxMiJ9.eyJhdXRoX3R5cGUiOiIyIiwidXNlcl9pZCI6Njg1NjgsInVzZXJfa2V5IjoiZGM4Mjc3MGNmN2M1NGI2Y2IwMDI4OTk1NGQzNzY0MmYiLCJ1c2VybmFtZSI6IjE4Njk3NDQzOTAwIn0.btmchfObGh9rDlYP6QsbIiTTg8BUDOykSeLAZjfeyDnvfIBefhJhqK3iBfwduC-AAZWZpq0ulhePz3VDgRFA_g"
-
 headers= {'Content-Type': 'application/json; charset=utf-8','Authorization': f'Bearer {temp_token}'}
-
 sc_url= 'https://pro.ai-topia.com/apis/chat/sendChat'
 
 @mes.handle()
 async def handle_function(args: Message = EventMessage()):
+    # 检测非空消息
     if user_content := args.extract_plain_text():
-
-        body= {'appUserId': '1', 'content': user_content, "roleId": "2472878"}
+        # body
+        body= {'appUserId': '2', 'content': user_content, "roleId": role_id}
 
         async with httpx.AsyncClient() as client:
             res= await client.post(
@@ -50,9 +51,11 @@ async def handle_function(args: Message = EventMessage()):
                 headers= headers,
                 json= body
             )
+            # 检查是否请求成功
             if res.status_code == 200:
                 data= res.json()
-                if data and "data" in data and data["data"] and "content" in data["data"]:
+                # 检查json合法并处理
+                if "content" in data["data"]:
                     await mes.finish(data["data"]["content"])
                 else:
                     await mes.send("数据结构不符合预期，请重试喵")
