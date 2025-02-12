@@ -23,8 +23,8 @@ _✨ NoneBot2 AI乌托邦对话插件 ✨_
   <a href="https://raw.githubusercontent.com/cscs181/QQ-Github-Bot/master/LICENSE">
     <img src="https://img.shields.io/github/license/cscs181/QQ-Github-Bot.svg" alt="license">
   </a>
-  <a href="https://pypi.python.org/pypi/nonebot-plugin-analysis-bilibili">
-    <img src="https://img.shields.io/pypi/v/nonebot-plugin-analysis-bilibili.svg" alt="pypi">
+  <a href="https://pypi.python.org/pypi/nonebot_plugin_ai_topia">
+    <img src="https://img.shields.io/pypi/v/nonebot_plugin_ai_topia.svg" alt="pypi">
   </a>
   <img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="python">
 </p>
@@ -39,17 +39,17 @@ _✨ NoneBot2 AI乌托邦对话插件 ✨_
 1. 使用 nb-cli 安装，不需要手动添加入口，更新使用 pip (推荐)
 
 ```
-nb plugin install nonebot_plugin_analysis_bilibili
+nb plugin install nonebot_plugin_ai_topia
 ```
 
 2. 使用 pip 安装和更新，初次安装需要手动添加入口 （新版默认不带 bot.py 文件）
 
 ```
-pip install --upgrade nonebot_plugin_analysis_bilibili
+pip install --upgrade nonebot_plugin_ai_topia
 ```
 
 pip 安装后在 Nonebot2 入口文件（例如 bot.py ）增加：
 
 ```python
-nonebot.load_plugin("nonebot_plugin_analysis_bilibili")
+nonebot.load_plugin("nonebot_plugin_ai_topia")
 ```
