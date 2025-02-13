@@ -25,8 +25,13 @@ async def topia_login(key,secret):
         
 
         # 检查返回内容合法
-        if res.status_code == 200 and "access_token" in res.json()["data"]:
+        if res.json() is None:
+            return "error"
+        else:
             data = res.json()
             # 存储token并返回ture
-            data_file = store.get_plugin_data_file("localstore.txt")
-            data_file.write_text(data["data"]["access_token"])
+            if isinstance(data, dict) and "data" in data:
+                data_file = store.get_plugin_data_file("localstore.txt")
+                data_file.write_text(data["data"]["access_token"])
+                return data["data"]["access_token"]
+            

@@ -1,4 +1,4 @@
-import httpx
+import httpx,nonebot
 from.Login import topia_login
 
 from pathlib import Path
@@ -26,10 +26,13 @@ __plugin_meta__= PluginMetadata(
 
 ## config
 plugin_config= get_plugin_config(Config)
+config= nonebot.get_driver().config
 
-api_key= plugin_config.ai_topia_api_key
-api_secret= plugin_config.ai_topia_api_secret
-role_id= plugin_config.ai_topia_role_id
+# api config
+api_key= getattr(config, "ai_topia_key", "")
+api_secret= getattr(config, "ai_topia_secret", "")
+role_id= getattr(config, "ai_topia_roleid", "")
+
 
 # token文件句柄
 data_file= store.get_plugin_data_file("localstore.txt")
@@ -47,9 +50,12 @@ async def handle_function(args: Message = EventMessage()):
         if data_file.exists():
             temp_token= data_file.read_text()
         else:
-            # 执行login方法获取token
-            await topia_login(api_key,api_secret)
-            temp_token= data_file.read_text()
+            # 执行login方法获取token，顺便检查配置是否填写
+            temp_token= topia_login(api_key,api_secret)
+            if api_key == "" or api_secret == "" or role_id == "" or temp_token == "error":
+                await mes.finish("token请求失败，请检查配置是否填写正确")
+
+
         # body
         body= {'appUserId': '2', 'content': user_content, "roleId": role_id}
         headers= {'Content-Type': 'application/json; charset=utf-8','Authorization': f'Bearer {temp_token}'}
