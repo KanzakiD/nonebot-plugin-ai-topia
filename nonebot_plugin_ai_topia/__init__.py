@@ -2,8 +2,6 @@ import httpx,nonebot
 from.Login import topia_login
 
 from pathlib import Path
-from .config import Config
-from nonebot import get_plugin_config
 from nonebot.rule import to_me
 from nonebot.params import EventMessage
 from nonebot.plugin import on_message,on_command,PluginMetadata
@@ -25,7 +23,6 @@ __plugin_meta__= PluginMetadata(
 
 
 ## config
-plugin_config= get_plugin_config(Config)
 config= nonebot.get_driver().config
 
 # api config

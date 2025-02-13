@@ -1,6 +1,4 @@
 import httpx
-from .config import Config
-from nonebot import get_plugin_config
 
 # 本地存储
 from nonebot import require
