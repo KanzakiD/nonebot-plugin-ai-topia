@@ -35,12 +35,18 @@ _✨ NoneBot2 AI乌托邦对话插件 ✨_
 整体功能已完成
 
 ## 使用方式
-首先去插件目录找config.py 填写乌托邦的apikey、secret和roleId
+登录<a href="https://pro.ai-topia.com/">AI乌托邦pro官网</a>获取接口密钥和你创建的角色体ID，然后在nonebot配置文件(.env开头文件)中填写以下配置：
+
+ai_topia_key="{your_apikey}"</br>
+ai_topia_secret="{your_apisecret}"</br>
+ai_topia_roleid="{你创建的角色体ID}"
+
+
 
 私聊或群聊@机器人 即可对话
 
 
-## 安装（没发到pypi和nonebot商店，以下都暂时用不了喵）
+## 安装（没发到nonebot商店，暂时不能用nb-cli安装）
 
 1. 使用 nb-cli 安装，不需要手动添加入口，更新使用 pip (推荐)
 
