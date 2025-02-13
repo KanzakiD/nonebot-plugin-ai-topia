@@ -36,10 +36,9 @@ _✨ NoneBot2 AI乌托邦对话插件 ✨_
 
 ## 使用方式
 登录<a href="https://pro.ai-topia.com/">AI乌托邦pro官网</a>获取接口密钥和你创建的角色体ID，然后在nonebot配置文件(.env开头文件)中填写以下配置：
+
 ai_topia_key="{your_apikey}"
-
 ai_topia_secret="{your_apisecret}"
-
 ai_topia_roleid="{你创建的角色体ID}"
 
 
