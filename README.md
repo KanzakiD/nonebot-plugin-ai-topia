@@ -37,7 +37,9 @@ _✨ NoneBot2 AI乌托邦对话插件 ✨_
 ## 使用方式
 
 ai_topia_key="{your_apikey}"
+
 ai_topia_secret="{your_apisecret}"
+
 ai_topia_roleid="{你创建的角色体ID}"
 
 私聊或群聊@机器人 即可对话
