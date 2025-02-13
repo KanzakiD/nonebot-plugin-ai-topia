@@ -1,6 +1,6 @@
 [project]
 name = "nonebot_plugin_ai_topia"
-version = "0.1.1"
+version = "0.1.2"
 description = "nonebot2AI乌托邦pro对话插件"
 authors = [{name = "kanzakiD", email = "1690800500@qq.com"}]
 dependencies = [
