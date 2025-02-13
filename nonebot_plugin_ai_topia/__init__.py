@@ -53,7 +53,7 @@ async def handle_function(args: Message = EventMessage()):
             # 执行login方法获取token，顺便检查配置是否填写
             temp_token= topia_login(api_key,api_secret)
             if api_key == "" or api_secret == "" or role_id == "" or temp_token == "error":
-                await mes.finish("token请求失败，请检查配置是否填写正确")
+                await mes.finish("token请求失败，请检查配置填写")
 
 
         # body
