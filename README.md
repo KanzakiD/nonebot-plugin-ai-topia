@@ -54,13 +54,13 @@ ai_topia_roleid="{你创建的角色体ID}"
 
 ## 安装（没发到nonebot商店，暂时不能用nb-cli安装）
 
-1. 使用 nb-cli 安装，不需要手动添加入口，更新使用 pip (推荐)
+1. 使用 nb-cli 安装，不需要手动添加入口，更新使用 pip (暂不可用)
 
 ```
 nb plugin install nonebot_plugin_ai_topia
 ```
 
-2. 使用 pip 安装和更新，初次安装需要手动添加入口 （新版默认不带 bot.py 文件）
+2. 使用 pip 安装和更新，初次安装需要手动添加入口 （新版默认不带 bot.py 文件）（可用）
 
 ```
 pip install --upgrade nonebot_plugin_ai_topia
