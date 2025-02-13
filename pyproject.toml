@@ -2,7 +2,7 @@
 name = "nonebot_plugin_ai_topia"
 version = "0.1.0"
 description = "nonebot2AI乌托邦pro对话插件"
-authors = ["kanzakiD"]
+authors = [{name = "kanzakiD", email = "1690800500@qq.com"}]
 dependencies = [
     "httpx>=0.28.1",
     "nonebot2>=2.4.1",
