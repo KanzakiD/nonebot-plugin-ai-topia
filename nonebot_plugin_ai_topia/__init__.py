@@ -33,13 +33,16 @@ api_key= getattr(config, "ai_topia_key", "")
 api_secret= getattr(config, "ai_topia_secret", "")
 role_id= getattr(config, "ai_topia_roleid", "")
 
+#响应优先级
+priority= getattr(config, "ai_topia_priority", 20)
+
 
 # token文件句柄
 data_file= store.get_plugin_data_file("localstore.txt")
 
 
 ## 对话模块
-mes= on_message(rule=to_me(),priority=plugin_config.ai_topia_priority)
+mes= on_message(rule=to_me(),priority=priority)
 
 @mes.handle()
 async def handle_function(args: Message = EventMessage()):
